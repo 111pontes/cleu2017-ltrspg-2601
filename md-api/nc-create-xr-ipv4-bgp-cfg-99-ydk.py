@@ -55,9 +55,6 @@ def config_bgp(bgp):
     global_af.af_name = xr_ipv4_bgp_datatypes.BgpAddressFamilyEnum.vp_nv4_unicast
     global_af.enable = Empty()
     four_byte_as.default_vrf.global_.global_afs.global_af.append(global_af)
-    instance_as.four_byte_as.append(four_byte_as)
-    instance.instance_as.append(instance_as)
-    bgp.instance.append(instance)
 
     # configure IBGP neighbor
     neighbor = four_byte_as.default_vrf.bgp_entity.neighbors.Neighbor()
@@ -81,10 +78,17 @@ def config_bgp(bgp):
     vrf.vrf_global.route_distinguisher.as_index = 0
     vrf_global_af = vrf.vrf_global.vrf_global_afs.VrfGlobalAf()
     vrf_global_af.af_name = xr_ipv4_bgp_datatypes.BgpAddressFamilyEnum.ipv4_unicast
+    vrf_global_af.enable = Empty()
     vrf_global_af.connected_routes = vrf_global_af.ConnectedRoutes()
     vrf_global_af.connected_routes.default_metric = 10
     vrf.vrf_global.vrf_global_afs.vrf_global_af.append(vrf_global_af)
     four_byte_as.vrfs.vrf.append(vrf)
+
+    # append configuration objects
+    instance_as.four_byte_as.append(four_byte_as)
+    instance.instance_as.append(instance_as)
+    bgp.instance.append(instance)
+
 
 
 if __name__ == "__main__":
